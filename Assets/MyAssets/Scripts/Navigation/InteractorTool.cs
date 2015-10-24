@@ -12,15 +12,25 @@ public class InteractorTool : MonoBehaviour {
 	public InteractionAgent lastSelected;
 	public GameObject player;
 	public Camera playerCamera;
+	public WaypointManager waypointManager;
+
+	//public WaypointBehaviour currentWaypoint;
 
 	// Use this for initialization
 	void Start () {
 		player = GameObject.FindGameObjectWithTag ("MainCamera").gameObject;
 		playerCamera = player.GetComponent<Camera>();
+		waypointManager = GameObject.FindGameObjectWithTag ("WaypointHelpers").GetComponent<WaypointManager>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		//CheckForActivation();
+
+
+
+
 		RaycastHit hit;
 		Debug.DrawRay (playerCamera.transform.position, playerCamera.transform.forward*interactionDistance, Color.cyan);
 
@@ -58,6 +68,8 @@ public class InteractorTool : MonoBehaviour {
 			if (triggerTimer >= triggerTime){
 				//triggerTime = 0;
 				currentAgent.TriggerMainAction();
+				waypointManager.currentWaypoint = currentAgent.gameObject.GetComponentInParent<WaypointBehaviour>();
+				waypointManager.currentWaypoint.wpReactors.SetActive (false);
 				currentAgent = null;
 				lastSelected = null;
 			}
@@ -75,4 +87,11 @@ public class InteractorTool : MonoBehaviour {
 		//lastSelected.Unselect();
 		triggerTimer =0;
 	}
+
+/*
+	void CheckForActivation(){
+
+	}
+*/
+
 }
