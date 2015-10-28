@@ -88,10 +88,6 @@ public class InteractorTool : MonoBehaviour {
 		triggerTimer =0;
 	}
 
-/*
-	void CheckForActivation(){
 
-	}
-*/
 
 }
