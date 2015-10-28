@@ -13,7 +13,7 @@ public class InteractorTool : MonoBehaviour {
 	public GameObject player;
 	public Camera playerCamera;
 	public WaypointManager waypointManager;
-
+	public Animator animator;
 	//public WaypointBehaviour currentWaypoint;
 
 	// Use this for initialization
@@ -21,6 +21,7 @@ public class InteractorTool : MonoBehaviour {
 		player = GameObject.FindGameObjectWithTag ("MainCamera").gameObject;
 		playerCamera = player.GetComponent<Camera>();
 		waypointManager = GameObject.FindGameObjectWithTag ("WaypointHelpers").GetComponent<WaypointManager>();
+		animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -66,12 +67,8 @@ public class InteractorTool : MonoBehaviour {
 		if (currentAgent == lastSelected && currentAgent != null){
 			triggerTimer += Time.deltaTime;
 			if (triggerTimer >= triggerTime){
-				//triggerTime = 0;
-				currentAgent.TriggerMainAction();
-				waypointManager.currentWaypoint = currentAgent.gameObject.GetComponentInParent<WaypointBehaviour>();
-				waypointManager.currentWaypoint.wpReactors.SetActive (false);
-				currentAgent = null;
-				lastSelected = null;
+				//activar flag de animacion
+				animator.SetBool ("Fade", true);
 			}
 			
 		}
@@ -86,6 +83,18 @@ public class InteractorTool : MonoBehaviour {
 	void ResetControlVars (){
 		//lastSelected.Unselect();
 		triggerTimer =0;
+	}
+
+	public void TriggerWaypointsActions(){
+
+		if (waypointManager.currentWaypoint != null)
+			waypointManager.currentWaypoint.wpReactors.SetActive (true);
+		currentAgent.TriggerMainAction();
+		waypointManager.currentWaypoint = currentAgent.gameObject.GetComponentInParent<WaypointBehaviour>();
+		waypointManager.currentWaypoint.wpReactors.SetActive (false);
+		currentAgent = null;
+		lastSelected = null;
+		animator.SetBool ("Fade", false);
 	}
 
 
