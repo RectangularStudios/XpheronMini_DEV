@@ -11,7 +11,7 @@ public class WaypointBehaviour : MonoBehaviour {
 
 	void Start (){
 		targetCameraGO = GameObject.FindGameObjectWithTag ("MainCamera");
-		wpReactors.SetActive(false);
+		//wpReactors.SetActive(false);  //uncomment for start app with all waypoints disabled
 	}
 	
 	// Update is called once per frame

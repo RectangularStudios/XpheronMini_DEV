@@ -32,7 +32,8 @@ public class INA_Waypoint : InteractionAgent {
 			//Debug.Log (hit.transform.name);
 
 			Vector3 newPosition  = new Vector3 (hit.point.x, hit.point.y + 1.5f, hit.point.z);
-			GameObject player = GameObject.FindGameObjectWithTag ("MainCamera");
+			//GameObject player = GameObject.FindGameObjectWithTag ("MainCamera");
+			GameObject player = GameObject.FindGameObjectWithTag ("MainCamera").transform.root.gameObject; //modified for G-Cardboard
 			player.transform.position = newPosition;  //esto debe sustituirse por un player.WaypointManager.CambiarPosicion que incluya los fades
 
 		} 
