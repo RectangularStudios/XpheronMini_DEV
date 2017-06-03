@@ -4,16 +4,19 @@ using System.Collections;
 public class INA_Waypoint : InteractionAgent {
 		//keep public
 		public GameObject particlesAnchor;
-
+		
 
 		//set private
 		ParticleSystem particles;
 		public GameObject particlesHolder;
 		public bool isCurrent = false;
-
+		public GameObject redMarker;	 	
+		public GameObject redAnchor; 
 	void Start (){
 		particles = GameObject.FindGameObjectWithTag("WaypointHelpers").transform.FindChild("ParticleMarker01").GetComponent<ParticleSystem>();
 		particlesHolder = GameObject.FindGameObjectWithTag("WaypointHelpers").transform.FindChild("ParticleMarker01").gameObject;
+
+		redMarker = GameObject.FindGameObjectWithTag("SphereMarker");
 		Debug.Log (particlesAnchor);
 
 
@@ -45,11 +48,14 @@ public class INA_Waypoint : InteractionAgent {
 
 
 	override public void Select (){
+		redMarker.transform.position = redAnchor.transform.position;
+		redMarker.SetActive (true);
 		particlesHolder.transform.position = particlesAnchor.transform.position;
 		particles.Play ();
 	}
 	
 	override public void Unselect (){
+		redMarker.SetActive (false);
 		//Debug.Log ("UNSELECTE");
 		particles.Stop();
 	}
